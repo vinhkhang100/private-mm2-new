@@ -16,7 +16,6 @@ _G.autofarm_xp = false
 _G.autofarm_done = false
 _G.autograb_gun = false
 _G.fling_counter = tick()
-_G.last_coin = nil
 --configs
 local function getCurrentMap()
     for _,value in pairs(workspace:GetChildren()) do
@@ -53,9 +52,8 @@ local function getCoin()
         local distance = math.huge
         for _,e in map.CoinContainer:GetChildren() do
             if e and e:FindFirstChild("CoinVisual") and e.CoinVisual.Transparency==0 then
-                if (char.PrimaryPart.Position-e.Position).Magnitude < distance and e~=_G.last_coin then
+                if (char.PrimaryPart.Position-e.Position).Magnitude < distance  then
                     distance = (char.PrimaryPart.Position-e.Position).Magnitude
-                    _G.last_coin = e
                     coin = e
                 end
             end
