@@ -9,7 +9,7 @@ local plr = game.Players.LocalPlayer
 --toggles and variables
 _G.autofarm_toggle = false
 _G.autofarm_speed = 15
-_G.autofarm_cooldown = .4
+_G.autofarm_cooldown = 0.4
 _G.walkspeed = 16
 _G.jumppower = 50
 _G.autofarm_xp = false
@@ -220,9 +220,6 @@ autofarmSection:NewToggle("Autofarm XP", "sdfdsfa", function(state)
 end)
 autofarmSection:NewSlider("Autofarm Speed", "fd", 30, _G.autofarm_speed, function(s) -- 500 (MaxValue) | 0 (MinValue)
     _G.autofarm_speed = s
-end)
-autofarmSection:NewSlider("Autofarm Cooldown", "fd", .75, _G.autofarm_cooldown, function(s) -- 500 (MaxValue) | 0 (MinValue)
-    _G.autofarm_cooldown = s
 end)
 autofarmSection:NewToggle("Auto Grab Gun", "sdfdsfa", function(state)
     _G.autograb_gun = state
