@@ -322,15 +322,11 @@ while task.wait(_G.autofarm_cooldown) do
                         char.PrimaryPart.CFrame = thisCoin.CFrame
                     end
                     local lolno = tick()
-                    char.PrimaryPart.Anchored = true
                     local thisTween = game:GetService("TweenService"):Create(char.PrimaryPart,TweenInfo.new((thisCoin.Position-char.PrimaryPart.Position).Magnitude/_G.autofarm_speed),{CFrame = thisCoin.CFrame*CFrame.new(0,1,0)})
                     thisTween:Play()
                     repeat
                         task.wait()
                     until tick()-lolno>20 or thisTween.Completed or (not map)
-                    if char then
-                        char.PrimaryPart.Anchored = false
-                    end
                 else
                     _G.autofarm_done = true
                 end
@@ -341,6 +337,5 @@ while task.wait(_G.autofarm_cooldown) do
             _G.autofarm_done = false
         end
     elseif char then
-        char.PrimaryPart.Anchored = false
     end
 end
