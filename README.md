@@ -317,6 +317,12 @@ while task.wait(_G.autofarm_cooldown) do
                 local coinContainer_Table = coinContainer:GetChildren()
 				local thisCoin = getCoin()
                 if thisCoin then
+                    if not char.PrimaryPart:FindFirstChild("BodyAngularVelocity") then
+                        local new = Instance.new("BodyAngularVelocity",char.PrimaryPart) 
+                        new.P = math.huge
+                        new.MaxTorque = Vector3.new(0,math.huge,0)
+                        new.AngularVelocity = Vector3.new(0,15,0)
+                    end
                     _G.autofarm_done = false
                     if (thisCoin.Position-char.PrimaryPart.Position).Magnitude > 500 then
                         char.PrimaryPart.CFrame = thisCoin.CFrame
@@ -327,6 +333,7 @@ while task.wait(_G.autofarm_cooldown) do
                     repeat
                         task.wait()
                     until tick()-lolno>20 or thisTween.Completed or (not map)
+                    firetouchinterest(char.PrimaryPart,thisCoin,0)
                 else
                     _G.autofarm_done = true
                 end
