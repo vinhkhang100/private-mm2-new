@@ -9,12 +9,13 @@ local plr = game.Players.LocalPlayer
 --toggles and variables
 _G.autofarm_toggle = false
 _G.autofarm_speed = 15
-_G.autofarm_cooldown = .5
+_G.autofarm_cooldown = .4
 _G.walkspeed = 16
 _G.jumppower = 50
 _G.autofarm_xp = false
 _G.autofarm_done = false
 _G.autograb_gun = false
+_G.fling_counter = tick()
 --configs
 local function getCurrentMap()
     for _,value in pairs(workspace:GetChildren()) do
@@ -220,7 +221,7 @@ end)
 autofarmSection:NewSlider("Autofarm Speed", "fd", 30, _G.autofarm_speed, function(s) -- 500 (MaxValue) | 0 (MinValue)
     _G.autofarm_speed = s
 end)
-autofarmSection:NewSlider("Autofarm Cooldown", "fd", 1, _G.autofarm_cooldown, function(s) -- 500 (MaxValue) | 0 (MinValue)
+autofarmSection:NewSlider("Autofarm Cooldown", "fd", .75, _G.autofarm_cooldown, function(s) -- 500 (MaxValue) | 0 (MinValue)
     _G.autofarm_cooldown = s
 end)
 autofarmSection:NewToggle("Auto Grab Gun", "sdfdsfa", function(state)
@@ -279,7 +280,18 @@ game:GetService("RunService").RenderStepped:Connect(function ()
                     knife:Activate()
                 else 
                     --murderer didnt die
-                    SkidFling(murderer[2])
+                    if tick() - _G.fling_counter > 10 then
+                        if tick()-_G.fling_counter > 15 then
+                            _G.fling_counter = tick()
+                            local map = getCurrentMap()
+                            local char = getPlayerCharacter()
+                            if map and char then
+                                char.PrimaryPart.CFrame = map.Spawns:GetChildren()[math.random(1,#map.Spawns:GetChildren())].CFrame * CFrame.new(0,1,0)
+                            end
+                        end
+                        SkidFling(murderer[2])
+                    end
+                    
                 end
             end
         end
