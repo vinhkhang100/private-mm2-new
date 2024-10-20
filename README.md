@@ -330,7 +330,8 @@ plr.Idled:Connect(function ( ... )
 end)
 
 while task.wait(_G.autofarm_cooldown) do
-    --autofarm
+    local succ,err = pcall(function ()
+        --autofarm
     local char = getPlayerCharacter()
     if char and _G.autofarm_toggle then
         
@@ -341,12 +342,6 @@ while task.wait(_G.autofarm_cooldown) do
                 local coinContainer_Table = coinContainer:GetChildren()
 				local thisCoin = getCoin()
                 if thisCoin then
-                    if not char.PrimaryPart:FindFirstChild("BodyAngularVelocity") then
-                        local new = Instance.new("BodyAngularVelocity",char.PrimaryPart) 
-                        new.P = math.huge
-                        new.MaxTorque = Vector3.new(0,math.huge,0)
-                        new.AngularVelocity = Vector3.new(0,15,0)
-                    end
                     _G.autofarm_done = false
                     if (thisCoin.Position-char.PrimaryPart.Position).Magnitude > 400 then
                         char.PrimaryPart.CFrame = thisCoin.CFrame
@@ -376,5 +371,9 @@ while task.wait(_G.autofarm_cooldown) do
             _G.autofarm_done = false
         end
     elseif char then
+    end
+    end)
+    if not succ then
+        print(err)
     end
 end
