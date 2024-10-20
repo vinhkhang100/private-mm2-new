@@ -6,6 +6,7 @@ local othersSection = othersTab:NewSection("...")
 local autofarmSection = mainTab:NewSection("Autofarm")
 local universalSection = mainTab:NewSection("Universal")
 local plr = game.Players.LocalPlayer
+local virtual = game:GetService("VirtualUser")
 --toggles and variables
 _G.autofarm_toggle = false
 _G.autofarm_speed = 15
@@ -17,6 +18,8 @@ _G.autofarm_done = false
 _G.autograb_gun = false
 _G.fling_counter = tick()
 _G.jump_counter = tick()
+_G.esp = false
+_G.esp_transparency = 0
 --configs
 local function getCurrentMap()
     for _,value in pairs(workspace:GetChildren()) do
@@ -36,10 +39,22 @@ end
 local function getMurderer() 
     for _,player in game.Players:GetPlayers() do
         if player then
-            if player.Character and player.Backpack:FindFirstChild("Knife") then
+            if player.Character and player.Backpack and player.Backpack:FindFirstChild("Knife") then
                 return {player.Character,player,player.Backpack.Knife}
             elseif player.Character and player.Character:FindFirstChild("Knife") then
                 return {player.Character,player,player.Character.Knife}
+            end
+        end
+    end
+    return nil
+end
+local function getSheriff() 
+    for _,player in game.Players:GetPlayers() do
+        if player then
+            if player.Character and player.Backpack and player.Backpack:FindFirstChild("Gun") then
+                return {player.Character,player,player.Backpack.Gun}
+            elseif player.Character and player.Character:FindFirstChild("Gun") then
+                return {player.Character,player,player.Character.Gun}
             end
         end
     end
@@ -278,7 +293,8 @@ game:GetService("RunService").RenderStepped:Connect(function ()
                             prim.CFrame = char.PrimaryPart.CFrame*CFrame.new(0,0,-0.5)
                         end
                     end
-                    knife:Activate()
+                    virtual:CaptureController()
+                    virtual:ClickButton2(Vector2.new())
                 else 
                     --murderer didnt die
                     if tick() - _G.fling_counter > 10 then
@@ -304,6 +320,12 @@ game:GetService("RunService").RenderStepped:Connect(function ()
             end
         end
     end
+   
+end)
+
+plr.Idled:Connect(function ( ... )
+    virtual:CaptureController()
+    virtual:ClickButton2(Vector2.new())
 end)
 
 while task.wait(_G.autofarm_cooldown) do
