@@ -324,7 +324,7 @@ while task.wait(_G.autofarm_cooldown) do
                         new.AngularVelocity = Vector3.new(0,15,0)
                     end
                     _G.autofarm_done = false
-                    if (thisCoin.Position-char.PrimaryPart.Position).Magnitude > 500 then
+                    if (thisCoin.Position-char.PrimaryPart.Position).Magnitude > 400 then
                         char.PrimaryPart.CFrame = thisCoin.CFrame
                     end
                     local lolno = tick()
