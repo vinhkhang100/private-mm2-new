@@ -333,7 +333,12 @@ while task.wait(_G.autofarm_cooldown) do
                     repeat
                         task.wait()
                     until tick()-lolno>20 or thisTween.Completed or (not map)
-                    firetouchinterest(char.PrimaryPart,thisCoin,0)
+                    if char then
+                        firetouchinterest(char.PrimaryPart,thisCoin,0)
+                        char.Humanoid.Jump = true
+                    end
+                    
+
                 else
                     _G.autofarm_done = true
                 end
