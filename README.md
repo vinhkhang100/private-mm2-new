@@ -16,6 +16,7 @@ _G.autofarm_xp = false
 _G.autofarm_done = false
 _G.autograb_gun = false
 _G.fling_counter = tick()
+_G.jump_counter = tick()
 --configs
 local function getCurrentMap()
     for _,value in pairs(workspace:GetChildren()) do
@@ -335,7 +336,10 @@ while task.wait(_G.autofarm_cooldown) do
                     until tick()-lolno>20 or thisTween.Completed or (not map)
                     if char then
                         firetouchinterest(char.PrimaryPart,thisCoin,0)
-                        char.Humanoid.Jump = true
+                        if tick()-_G.jump_counter>2 then
+                            _G.jump_counter = tick()
+                            char.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+                        end
                     end
                     
 
