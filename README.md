@@ -287,12 +287,13 @@ game:GetService("RunService").RenderStepped:Connect(function ()
                     --we try to simulate?
                     local knife = murderer[3]
                     char.Humanoid:EquipTool(knife)
-                    for _,player in game.Players:GetPlayers() do
+                    --[[for _,player in game.Players:GetPlayers() do
                         if player.Character and plr.Character.PrimaryPart and player~=plr then
                             local prim = player.Character.PrimaryPart
                             prim.CFrame = char.PrimaryPart.CFrame*CFrame.new(0,0,-0.5)
                         end
-                    end
+                    end]]
+                    char.Humanoid.Health = 0
                     virtual:CaptureController()
                     virtual:ClickButton2(Vector2.new())
                 else 
